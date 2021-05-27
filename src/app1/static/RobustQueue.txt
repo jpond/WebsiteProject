@@ -1,0 +1,234 @@
+package edu.uwm.cs351.util;
+
+import java.util.AbstractQueue;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ * @author Jacob Pond
+ * Circular doubly linked queue data structure. FIFO. Has a dummy node at the beginning of the queue with null data.
+ * manyNodes variable keeps track of the size of the queue. Also has a nested iterator class with a robust
+ * iterator that never goes stale.
+ */
+public class RobustQueue<E> extends AbstractQueue<E> implements Iterable<E>{
+	private Node<E> dummy;
+	private int manyNodes;
+	
+	private static boolean doReport = true;
+	
+	/**
+	 * Creates new empty queue with a dummy node that points to itself.
+	 */
+	public RobustQueue() {
+		dummy = new Node<E>();
+		dummy.next = dummy;
+		dummy.prev = dummy;
+		assert wellFormed();
+	}
+	
+	private boolean report(String error) {
+		if (doReport) System.out.println("Invariant error: " + error);
+		else System.out.println("Caught problem: " + error);
+		return false;
+	}
+	
+	/**
+	 * Method that checks issues in data structure, including: 1. incorrect manyNodes value 2. dummy node, or any other node,
+	 * does not have consistent next and prev pointers
+	 * @return true if data structure has no issues, false otherwise.
+	 */
+	private boolean wellFormed() {
+		int count = 0;
+		
+		if(dummy.next != dummy && dummy.next.data == null) return report("Dummy next problem");
+		
+		if(dummy.prev != dummy && dummy.prev.data == null) return report("Dummy prev problem");
+		
+		for(Node<E> x = dummy.next; x != dummy; x = x.next) {
+			if(x.next.data == null && x.next != dummy) {
+				return report("Pointer problem");
+			}
+			++count;
+		}
+		
+		if(count != manyNodes) {
+			return false;
+		}
+		
+		
+		return true;
+	}
+	
+	/**
+	 * @author Jacob Pond
+	 *
+	 * Node class store a next, prev referring to Nodes ahead and behind this Node. Also contains data to be stored.
+	 */
+	private static class Node<T> {
+		private Node<T> next;
+		private Node<T> prev;
+		private T data;
+		public Node(){
+			next = null;
+			prev = null;
+			data = null;
+		}
+		public Node(T t, Node<T> p, Node<T> n) {
+			data = t;
+			prev = p;
+			next = n;
+		}
+	}
+
+	/**
+	 * @param element to be added
+	 *Adds an element to the end of the queue.
+	 *@return true if element has been added.
+	 *@exception if element to be added to queue is null, throws NullPointerException
+	 */
+	@Override
+	public boolean offer(E e) {
+		assert wellFormed();
+		if(e == null) {
+			throw new NullPointerException();
+		}
+			Node<E> y = dummy.prev;
+			Node<E> x = new Node<E>(e, dummy.prev, dummy);
+			dummy.prev = x;
+			y.next = x;
+		++manyNodes;
+		
+		assert wellFormed();
+		return true;
+	}
+
+	/**
+	 *Removes the first element in the queue, then returns the data that was removed.
+	 *If the queue is empty returns null and does nothing.
+	 *@return element that was removed
+	 */
+	@Override
+	public E poll() {
+		assert wellFormed();
+		if(dummy.next == dummy) {
+			return null;
+		}
+		Node<E> x = dummy.next;
+		dummy.next = x.next;
+		x.next.prev = dummy;
+		E d = x.data;
+		x.data = null;
+		--manyNodes;
+		
+		assert wellFormed();
+		return d;
+	}
+
+	/**
+	 *@return first element in the queue
+	 */
+	@Override
+	public E peek() {
+		assert wellFormed();
+		return dummy.next.data;
+	}
+
+	/**
+	 * Creates a new iterator for this queue by calling the constructor of the myIterator class.
+	 * @return iterator that has been created
+	 */
+	@Override
+	public myIterator iterator() {
+		assert wellFormed();
+		myIterator it = new myIterator();
+		return it;
+	}
+
+	/**
+	 *@return number of nodes in the queue
+	 */
+	@Override
+	public int size() {
+		assert wellFormed();
+		return manyNodes;
+	}
+	
+	/**
+	 * @author jacob pond
+	 * Iterator class with a cursor node.
+	 */
+	private class myIterator implements Iterator<E> {
+		private Node<E> cursor;
+		private int rCount;
+		/**
+		 * Creates new iterator starting at the dummy node.
+		 */
+		public myIterator() {
+			assert wellFormed();
+			cursor = dummy;
+		}
+
+		/**
+		 * If cursor.next == dummy then either the cursor is at the end of the queue
+		 * or the queue is empty, either way there is not next element
+		 *@return true if cursors next node is not dummy
+		 */
+		@Override
+		public boolean hasNext() {
+			assert wellFormed();
+			Node<E> x = cursor;
+			if(x != dummy && x.data == null) {
+				x = x.prev;
+				while(x.data == null && x != dummy) {
+					x = x.prev;
+				}
+			}
+			if(x.next.data == null) {
+				return false;
+			}
+			return true;
+		}
+
+		/**
+		 *Moves iterator to the next element in the queue
+		 *@return data of the next element
+		 *@exception if there is no next element, throws NoSuchElementException
+		 */
+		@Override
+		public E next() {
+			assert wellFormed();
+			if(hasNext()) {
+				if(cursor != dummy && cursor.data == null) {
+					cursor = cursor.prev;
+					while(cursor.data == null && cursor != dummy) {
+						cursor = cursor.prev;
+					}
+				}
+				cursor = cursor.next;
+				rCount = 0;
+				return cursor.data;
+			}
+
+			throw new NoSuchElementException();
+		}
+
+		/**
+		 *Removes the element the cursor is pointing to
+		 *@exception if trying to remove an element that has already been removed
+		 *or the dummy variable, throw IllegalStateException
+		 */
+		public void remove() {
+			assert wellFormed();
+			if(cursor.data == null || rCount > 0) {
+				throw new IllegalStateException();
+			}
+			cursor.prev.next = cursor.next;
+			cursor.next.prev = cursor.prev;
+			cursor.data = null;
+			cursor = cursor.prev;
+			--manyNodes;
+			++rCount;
+			assert wellFormed();
+		}
+	}
+}

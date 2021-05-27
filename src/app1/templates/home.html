@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="static\styles.css">
+</head>
+<body onscroll="stickyTopBar()">
+    <div class="top_color_block">
+        <a href="javascript:void(0)">Check out the most current promotion!</a>
+    </div>
+    <div class="header">
+        <div class="header_name">
+            <p>Jacob Pond</p>
+        </div>
+        <div class="header_links">
+            <a class="active" href="/">Home</a>
+            <a href="/projects/">Projects</a>
+            <a href="javascript:void(0)">Game (In Progress)</a>
+        </div>
+        <div class="header_contacts">
+            <p>jpond@uwm.edu | 612-597-1702</p>
+        </div>
+    </div>
+
+    <div class="first_thing">
+        <img id="headshot" src="static\Pond_photo.jpg" alt="my head">
+        <div id="bio">
+            <p id="bio1">Front End and Back End,</p><br>
+            <p id="bio2">Java and Python Development</p>
+        </div>
+    </div>
+
+    <div class="second_thing">
+        <p class="section_title">About Me</p><br>
+        
+    </div>
+
+    <div class="last_thing">
+        <p>© Big Doofus 2021. ALL RIGHTS RESERVED.</p>
+    </div>
+    <script >
+        var elements = document.getElementsByClassName("header");
+        var navbar = elements[0];
+        var sticky = navbar.offsetTop;
+        function stickyTopBar() {
+            if(window.pageYOffset >= sticky){
+                navbar.classList.add("sticky");
+            } else{
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+</body>
+</html>
