@@ -175,6 +175,14 @@ body {
     min-height:700px;
 }
 
+#java_example {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+}
+
 .section_title { 
     display:flex;
     padding-top:50px;
@@ -182,6 +190,13 @@ body {
     font-size:64px;
     font-weight:bold;
     color:black;
+}
+
+ul.proj_desc {
+    padding-left:25px;
+    padding-right:25px;
+    list-style-type:circle;
+    font-size:20px;
 }
 
 .subtitle {
