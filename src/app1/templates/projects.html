@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/static\styles.css">
 </head>
-<body>
+<body onscroll="stickyTopBar()">
     <div class="top_color_block">
         <a href="javascript:void(0)">Check out the most current promotion!</a>
     </div>
@@ -28,7 +28,7 @@
         </div>
         <div id="DSProj_info">
             <p id="DSP_title" style="font-size:48px">Data Analytics Project</p>
-            <p id="DSP_text">During the 2020/2021 school year I completed a data anylitics project for the ______ of Horizontal ____. 
+            <ul id="DSP_text">During the 2020/2021 school year I completed a data analytics project for the New Revenue & Innovation Practice Director of Horizontal Digital. 
             I used Einstein Analytics, which is a feature of Salesforce. I found a data set on Kaggle, formatted and trimmed the data,
             and inputted it into Eintsein Analytics. This software uses machine learning to maximize or minimize a chosen variable.
             For my dataset, I wanted to maximize the positive response of health insurance customers, when their insurance provider attempted
@@ -40,18 +40,30 @@
 
     <div class="second_thing">
         <div id="java_example">
-            <p class="section_title">Java Programming</p><br>
+            <p class="section_title">Java Programming</p>
             <ul class="proj_desc">
                 <li>Designed a queue data structure using Java.</li>
                 <li>Uses a "robust" iterator that never goes "stale", or loses sync with the index of the outer queue structure.</li>
                 <li>Designed from scratch in the time span of one week.</li>
             </ul>
         </div>
-        <iFrame id="RQSample" src="/static\RobustQueue.txt" width="700px" height="600px"></iFrame>
+        <iFrame id="RQSample" src="/static\RobustQueue.txt" width="700px" height="450px"></iFrame>
     </div>
 
     <div class="last_thing">
         <p>© Big Doofus 2021. ALL RIGHTS RESERVED.</p>
     </div>
+    <script >
+        var elements = document.getElementsByClassName("header");
+        var navbar = elements[0];
+        var sticky = navbar.offsetTop;
+        function stickyTopBar() {
+            if(window.pageYOffset >= sticky){
+                navbar.classList.add("sticky");
+            } else{
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
 </body>
 </html>

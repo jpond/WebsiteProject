@@ -161,13 +161,14 @@ body {
 
 
 #DSP_text {
-
+    font-size:22px;
 }
 
 .second_thing {
     background-color:seashell;
     display:flex;
     flex-direction:row;
+    align-items:center;
     justify-content:center;
     left:0;
     right:0;
@@ -177,37 +178,45 @@ body {
 
 #java_example {
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
     justify-content:center;
-    align-items:center;
-
+    margin-right:50px;
+    margin-left:50px;
 }
 
 .section_title { 
     display:flex;
-    padding-top:50px;
-    padding-right:100px;
     font-size:64px;
     font-weight:bold;
     color:black;
 }
 
 ul.proj_desc {
-    padding-left:25px;
-    padding-right:25px;
+    padding-top:25px;
+    padding-right:50px;
     list-style-type:circle;
-    font-size:20px;
+    font-size:32px;
+    flex-basis:35%;
+}
+
+#RQSample {
+    background-color:white;
+    margin-top:50px;
+    margin-right:50px;
+}
+
+#abt_me {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    flex-basis:35%;
 }
 
 .subtitle {
     font-size:48px;
     font-weight:bold;
     color:#e1701a;
-}
-
-#RQSample {
-    background-color:white;
-    margin-top:50px;
 }
 
 .last_thing {
@@ -228,6 +237,6 @@ ul.proj_desc {
     width:100%;
 }
 
-.sticky + #first_thing {
+.sticky + .first_thing {
     padding-top:75px;
 }
