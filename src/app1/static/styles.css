@@ -107,6 +107,7 @@ body {
     right:0;
     flex-basis:650px;
     min-height:650px;
+    overflow:hidden;
 }
 
 #headshot {
@@ -136,10 +137,14 @@ body {
     color:#e1701a;
 }
 
-#project_screenshots {
+.project_screenshots {
     display:flex;
     flex-direction:column;
     flex-basis:33%;
+}
+
+.project_screenshots > img:hover {
+    transform:scale(2.5);
 }
 
 #DSProj_info {
