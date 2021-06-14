@@ -139,12 +139,18 @@ body {
 
 .project_screenshots {
     display:flex;
-    flex-direction:column;
-    flex-basis:33%;
+    flex-direction:row;
+    flex-wrap:wrap;
+    flex-basis:38%;
 }
 
 .project_screenshots > img:hover {
-    transform:scale(2.5);
+    display:block;
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-top:-194px;
+    margin-left:-190px;
 }
 
 #DSProj_info {
@@ -183,10 +189,13 @@ body {
 
 #java_example {
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
     justify-content:center;
+    align-items:center;
     margin-right:50px;
     margin-left:50px;
+    flex-basis:35%;
+    padding-bottom:100px;
 }
 
 .section_title { 
@@ -206,7 +215,7 @@ ul.proj_desc {
 
 #RQSample {
     background-color:white;
-    margin-top:50px;
+    flex-basis:30%;
     margin-right:50px;
 }
 
@@ -244,4 +253,11 @@ ul.proj_desc {
 
 .sticky + .first_thing {
     padding-top:75px;
+}
+
+.resume_pdf {
+    display:flex;
+    left:0;
+    right:0;
+    height:600px;
 }
