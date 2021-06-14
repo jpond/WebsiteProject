@@ -147,14 +147,15 @@ body {
 .project_screenshots > img:hover {
     display:block;
     position:fixed;
-    top:50%;
+    top:60%;
     left:50%;
     margin-top:-194px;
     margin-left:-190px;
+    transform:scale(4.5);
 }
 
 #DSProj_info {
-    flex-basis:33%;
+    flex-basis:40%;
     overflow-wrap:normal;
     left:0;
     right:0;
@@ -168,11 +169,6 @@ body {
     font-size:48;
     padding-bottom:25px;
     font-weight:600;
-}
-
-
-#DSP_text {
-    font-size:22px;
 }
 
 .second_thing {
@@ -255,9 +251,16 @@ ul.proj_desc {
     padding-top:75px;
 }
 
+#WebProjInfo {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    flex-basis:40%;
+}
+
 .resume_pdf {
     display:flex;
     left:0;
     right:0;
-    height:600px;
 }
